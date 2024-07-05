@@ -23,16 +23,10 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-schema_urlpatterns = [
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("users.urls", namespace="users")),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r"^doc/", schema_view.with_ui("swagger")),
     re_path(r"^redoc/", schema_view.with_ui("redoc")),
-    
-    path("", include("users.urls", namespace="users")),
-]
-
-
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include(schema_urlpatterns)),
 ]

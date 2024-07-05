@@ -1,18 +1,11 @@
 from hashid_field import rest
 
-from django.conf import settings
 from django.utils.translation import gettext as _
 from django.contrib.auth import password_validation, get_user_model
-from django.contrib.auth.models import update_last_login
 
 from rest_framework import exceptions, serializers, validators
 from rest_framework_simplejwt.serializers import PasswordField
-from rest_framework_simplejwt.settings import api_settings as jwt_api_settings
-from rest_framework_simplejwt import (
-    serializers as jwt_serializers,
-    tokens as jwt_tokens,
-    exceptions as jwt_exceptions,
-)
+from rest_framework_simplejwt import serializers as jwt_serializers
 
 from .models import User
 

@@ -10,6 +10,9 @@ auth_urlpatterns = [
     path("login", views.CookieTokenObtainPairView.as_view(), name="login"),
 ]
 
+users_urlpatterns = []
+
 urlpatterns = [
     path("auth/", include(auth_urlpatterns)),
+    path("api/users/", include(users_urlpatterns)),
 ]
