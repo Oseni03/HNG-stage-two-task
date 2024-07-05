@@ -9,3 +9,7 @@ class OrganisationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organisation
         fields = ("id", "name", "description")
+    
+
+class OrganisationUserSerializer(serializers.Serializer):
+    user_id = serializers.CharField()

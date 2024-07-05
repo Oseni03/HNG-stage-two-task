@@ -4,11 +4,17 @@ from rest_framework import status
 
 
 def success_response(message, data=None, status=status.HTTP_200_OK):
-    response = {
-        "status": "success",
-        "message": message,
-        "data" : data
-    }
+    if data:
+        response = {
+            "status": "success",
+            "message": message,
+            "data" : data
+        }
+    else:
+        response = {
+            "status": "success",
+            "message": message,
+        }
     return Response(response, status=status)
 
 
