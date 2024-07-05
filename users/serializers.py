@@ -1,5 +1,3 @@
-from hashid_field import rest
-
 from django.utils.translation import gettext as _
 from django.contrib.auth import password_validation, get_user_model
 
@@ -11,7 +9,6 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    id = rest.HashidSerializerCharField(read_only=True)
     email = serializers.EmailField(
         validators=[validators.UniqueValidator(queryset=User.objects.all())],
     )

@@ -1,5 +1,3 @@
-import hashid_field
-
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -43,7 +41,6 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model representing user in the system."""
-    id = hashid_field.HashidAutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(

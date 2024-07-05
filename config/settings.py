@@ -132,6 +132,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'users.exception_handler.custom_exception_handler',
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "users.authentication.JSONWebTokenCookieAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
@@ -148,6 +149,10 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
 }
+ACCESS_TOKEN_COOKIE = "access_token"
+REFRESH_TOKEN_COOKIE = "refresh_token"
+REFRESH_TOKEN_LOGOUT_COOKIE = "refresh_token_logout"
+COOKIE_MAX_AGE = 3600 * 24 * 14  # 14 days
 
 SWAGGER_SETTINGS = {
     "DEFAULT_INFO": "core.urls.api_info",
