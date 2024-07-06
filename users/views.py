@@ -19,15 +19,19 @@ class CreateUserView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            print(user)
+            refresh = jwt_tokens.RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
             return utils.success_response(
                 "Registration successful",
                 {
-                    "user_id": user.id,
-                    "first_name": user.first_name,
-                    "last_name": user.first_name,
-                    "email": user.email,
-                    "phone": user.phone,
+                    "access_token": access_token,
+                    "user": {
+                        "user_id": user.id,
+                        "first_name": user.first_name,
+                        "last_name": user.first_name,
+                        "email": user.email,
+                        "phone": user.phone,
+                    }
                 },
                 status.HTTP_201_CREATED,
             )
@@ -53,12 +57,14 @@ class CookieTokenObtainPairView(jwt_views.TokenObtainPairView):
             response = utils.success_response(
                 message="Login successful.",
                 data={
-                    "access": access_token,
-                    "user_id": user.id,
-                    "first_name": user.first_name,
-                    "last_name": user.first_name,
-                    "email": user.email,
-                    "phone": user.phone,
+                    "access_token": access_token,
+                    "user": {
+                        "user_id": user.id,
+                        "first_name": user.first_name,
+                        "last_name": user.first_name,
+                        "email": user.email,
+                        "phone": user.phone,
+                    }
                 },
             )
             utils.set_auth_cookie(
