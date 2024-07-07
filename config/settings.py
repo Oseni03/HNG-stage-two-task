@@ -168,3 +168,9 @@ SWAGGER_SETTINGS = {
 
 HASHID_FIELD_SALT = env("HASHID_FIELD_SALT", default="haaga82@#*?!")
 HASHID_FIELD_ENABLE_HASHID_OBJECT = False
+
+
+# STATIC FILES CONFIGURATIONS
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
