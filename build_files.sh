@@ -1,2 +1,2 @@
 pip install -r requirements.txt
-python manage.py collectstatic --noinput
+python12 manage.py collectstatic --noinput
