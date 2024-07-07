@@ -3,11 +3,13 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework import status, permissions
 from rest_framework_simplejwt import views as jwt_views, tokens as jwt_tokens
 
-from . import serializers, utils
+from organisations.models import Organisation
+
+from . import serializers, utils, models
 
 
 # Create your views here.
@@ -17,26 +19,23 @@ class CreateUserView(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            refresh = jwt_tokens.RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
-            return utils.success_response(
-                "Registration successful",
-                {
-                    "access_token": access_token,
-                    "user": {
-                        "user_id": user.id,
-                        "first_name": user.first_name,
-                        "last_name": user.first_name,
-                        "email": user.email,
-                        "phone": user.phone,
-                    }
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        refresh = jwt_tokens.RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        return utils.success_response(
+            "Registration successful",
+            {
+                "access_token": access_token,
+                "user": {
+                    "user_id": user.id,
+                    "first_name": user.first_name,
+                    "last_name": user.first_name,
+                    "email": user.email,
+                    "phone": user.phone,
                 },
-                status.HTTP_201_CREATED,
-            )
-        return utils.error_response(
-            message="Registration unsuccessful", status_code=status.HTTP_400_BAD_REQUEST
+            },
+            status.HTTP_201_CREATED,
         )
 
 
@@ -64,7 +63,7 @@ class CookieTokenObtainPairView(jwt_views.TokenObtainPairView):
                         "last_name": user.first_name,
                         "email": user.email,
                         "phone": user.phone,
-                    }
+                    },
                 },
             )
             utils.set_auth_cookie(
@@ -75,7 +74,7 @@ class CookieTokenObtainPairView(jwt_views.TokenObtainPairView):
                 },
             )
             return response
-        
+
         response = utils.error_response(
             "Authentication failed", status_code=status.HTTP_401_UNAUTHORIZED
         )
@@ -99,7 +98,34 @@ class RetrieveProfile(APIView):
                 },
             )
             return response
-        
+
+        response = utils.error_response(
+            "<message>", status_code=status.HTTP_404_NOT_FOUND
+        )
+        return response
+
+
+class UserOrganisationViews(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk, **kwargs):
+        if pk == request.user.id:
+            orgs = Organisation.objects.filter(users=request.user)
+            response = utils.success_response(
+                message="<message>",
+                data={
+                    "organisations": [
+                        {
+                            "org_id": org.id,
+                            "name": org.name,
+                            "description": org.description,
+                        }
+                        for org in orgs
+                    ]
+                },
+            )
+            return response
+
         response = utils.error_response(
             "<message>", status_code=status.HTTP_404_NOT_FOUND
         )

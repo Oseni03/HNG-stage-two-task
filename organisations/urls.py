@@ -6,7 +6,7 @@ from . import views
 app_name = "organisations"
 
 urlpatterns = [
-    path("", views.OrganisationListCreateViews.as_view(), name="list-organisation"),
+    path("", views.OrganisationListCreateViews.as_view(), name="list-create-organisation"),
     path("<int:pk>", views.OrganisationRetrieveViews.as_view(), name="retrieve-organisation"),
-    path("<int:pk>/user", views.OrganisationUserViews.as_view(), name="organisation-user"),
+    path("<int:pk>/user", views.OrganisationUserViews.as_view(), name="add-user"),
 ]

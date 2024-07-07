@@ -11,7 +11,6 @@ def custom_exception_handler(exc, context):
     if response is not None:
         errors = []
         for field, message in response.data.items():
-            print(message)
             if isinstance(message, list):
                 message = message[0]
 

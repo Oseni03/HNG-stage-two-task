@@ -11,7 +11,8 @@ auth_urlpatterns = [
 ]
 
 users_urlpatterns = [
-    path("<int:pk>", views.RetrieveProfile.as_view(), name="profile")
+    path("<int:pk>", views.RetrieveProfile.as_view(), name="profile"),
+    path("<int:pk>/organisations", views.UserOrganisationViews.as_view(), name="user-organisations")
 ]
 
 urlpatterns = [
