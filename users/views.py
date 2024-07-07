@@ -86,7 +86,7 @@ class RetrieveProfile(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, pk):
-        if pk == request.user.id:
+        if request.user.is_authenticated and pk == request.user.id:
             response = utils.success_response(
                 message="<message>",
                 data={
@@ -109,7 +109,7 @@ class UserOrganisationViews(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, pk, **kwargs):
-        if pk == request.user.id:
+        if request.user.is_authenticated and pk == request.user.id:
             orgs = Organisation.objects.filter(users=request.user)
             response = utils.success_response(
                 message="<message>",
