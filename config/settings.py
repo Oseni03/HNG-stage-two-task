@@ -78,10 +78,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("POSTGRES_DATABASE"),
+        'USER': env("POSTGRES_USER"),
+        'PASSWORD': env("POSTGRES_PASSWORD"),
+        'HOST': env("POSTGRES_HOST"),
+        'PORT': env("POSTGRES_PORT"),
+    },
 }
 
 
@@ -144,7 +148,7 @@ SIMPLE_JWT = {
         minutes=env.int("ACCESS_TOKEN_LIFETIME_MINUTES", default=60)
     ),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(
-        days=env.int("REFRESH_TOKEN_LIFETIME_DAYS", default=7)
+        days=env.int("REFRESH_TOKEN_LIFETIME_DAYS", default=5)
     ),
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "ROTATE_REFRESH_TOKENS": True,
