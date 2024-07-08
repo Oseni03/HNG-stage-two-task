@@ -41,7 +41,7 @@ class OrganisationListCreateViews(ListCreateAPIView):
         try:
             organisations = self.get_queryset()
             data = [
-                {"org_id": org.id, "name": org.name, "description": org.description}
+                {"orgId": org.id, "name": org.name, "description": org.description}
                 for org in organisations
             ]
             response = utils.success_response("<message>", data={"organisations": data})
@@ -54,10 +54,12 @@ class OrganisationListCreateViews(ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             org = serializer.save()
+            org.users.add(request.user)
+            org.save()
             return utils.success_response(
                 "Organisation created successfully",
                 {
-                    "org_id": org.id,
+                    "orgId": org.id,
                     "name": org.name,
                     "description": org.description,
                 },
@@ -78,7 +80,7 @@ class OrganisationUserViews(GenericAPIView):
     def post(self, request, pk, **kwargs):
         try:
             org = models.Organisation.objects.get(id=pk)
-            user_id = int(request.data.get("user_id"))
+            user_id = int(request.data.get("userId"))
             user = User.objects.get(id=user_id)
             org.users.add(user)
             org.save()

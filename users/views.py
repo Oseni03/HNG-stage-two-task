@@ -28,9 +28,9 @@ class CreateUserView(CreateAPIView):
             {
                 "access_token": access_token,
                 "user": {
-                    "user_id": user.id,
-                    "first_name": user.first_name,
-                    "last_name": user.first_name,
+                    "userId": user.id,
+                    "firstName": user.first_name,
+                    "lastName": user.first_name,
                     "email": user.email,
                     "phone": user.phone,
                 },
@@ -58,9 +58,9 @@ class CookieTokenObtainPairView(jwt_views.TokenObtainPairView):
                 data={
                     "access_token": access_token,
                     "user": {
-                        "user_id": user.id,
-                        "first_name": user.first_name,
-                        "last_name": user.first_name,
+                        "userId": user.id,
+                        "firstName": user.first_name,
+                        "lastName": user.first_name,
                         "email": user.email,
                         "phone": user.phone,
                     },
@@ -90,9 +90,9 @@ class RetrieveProfile(APIView):
             response = utils.success_response(
                 message="<message>",
                 data={
-                    "user_id": request.user.id,
-                    "first_name": request.user.first_name,
-                    "last_name": request.user.first_name,
+                    "userNd": request.user.id,
+                    "firstName": request.user.first_name,
+                    "lastName": request.user.first_name,
                     "email": request.user.email,
                     "phone": request.user.phone,
                 },
@@ -116,7 +116,7 @@ class UserOrganisationViews(APIView):
                 data={
                     "organisations": [
                         {
-                            "org_id": org.id,
+                            "orgId": org.id,
                             "name": org.name,
                             "description": org.description,
                         }

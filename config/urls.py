@@ -32,7 +32,7 @@ urlpatterns = [
         include(
             [
                 path("", include("users.urls", namespace="users")),
-                path("organisations/", include("organisations.urls", namespace="organisations")),
+                path("organisations", include("organisations.urls", namespace="organisations")),
             ]
         ),
     ),

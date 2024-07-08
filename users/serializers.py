@@ -9,6 +9,9 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    userId = serializers.IntegerField(source="id", read_only=True)
+    firstName = serializers.CharField(source="first_name")
+    lastName = serializers.CharField(source="last_name")
     email = serializers.EmailField(
         validators=[validators.UniqueValidator(queryset=User.objects.all())],
     )
@@ -16,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("id", "first_name", "last_name", "email", "phone", "password")
+        fields = ("userId", "firstName", "lastName", "email", "phone", "password")
 
     def validate_password(self, password):
         password_validation.validate_password(password)

@@ -4,12 +4,12 @@ from .models import Organisation
 
 
 class OrganisationSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+    orgId = serializers.IntegerField(source="id", read_only=True)
 
     class Meta:
         model = Organisation
-        fields = ("id", "name", "description")
+        fields = ("orgId", "name", "description")
     
 
 class OrganisationUserSerializer(serializers.Serializer):
-    user_id = serializers.CharField()
+    userId = serializers.CharField()
