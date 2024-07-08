@@ -12,8 +12,8 @@ class RegisterEndpointTest(APITestCase):
 
     def setUp(self):
         self.user_data = {
-            "first_name": "John",
-            "last_name": "Doe",
+            "firstName": "John",
+            "lastName": "Doe",
             "email": "john.doe@example.com",
             "phone": "1234567890",
             "password": "bcbhwyeuqwe894rb8323jh1",
@@ -26,7 +26,7 @@ class RegisterEndpointTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn("access_token", response.data["data"])
         self.assertEqual(
-            response.data["data"]["user"]["first_name"], self.user_data["first_name"]
+            response.data["data"]["user"]["firstName"], self.user_data["firstName"]
         )
         self.assertEqual(
             response.data["data"]["user"]["email"], self.user_data["email"]
@@ -35,16 +35,16 @@ class RegisterEndpointTest(APITestCase):
     def test_register_user_with_default_organisation(self):
         response = self.client.post(self.register_url, self.user_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        user_id = response.data["data"]["user"]["user_id"]
+        user_id = response.data["data"]["user"]["userId"]
         organisation = Organisation.objects.filter(users__id=user_id).first()
         self.assertIsNotNone(organisation)
         self.assertEqual(
-            organisation.name, f"{self.user_data["first_name"]}'s Organisation"
+            organisation.name, f"{self.user_data['firstName']}'s Organisation"
         )
 
     def test_register_user_missing_fields(self):
         missing_fields_data = {
-            "last_name": "Doe",
+            "lastName": "Doe",
             "email": "john.doe@example.com",
             "phone": "1234567890",
             "password": "EN;WFNJWED78123",
@@ -53,7 +53,7 @@ class RegisterEndpointTest(APITestCase):
             self.register_url, missing_fields_data, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual("first_name", response.data["errors"][0]["field"])
+        self.assertEqual("firstName", response.data["errors"][0]["field"])
 
     def test_register_user_duplicate_email(self):
         self.client.post(self.register_url, self.user_data, format='json')

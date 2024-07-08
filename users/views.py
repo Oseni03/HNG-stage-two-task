@@ -90,7 +90,7 @@ class RetrieveProfile(APIView):
             response = utils.success_response(
                 message="<message>",
                 data={
-                    "userNd": request.user.id,
+                    "userId": request.user.id,
                     "firstName": request.user.first_name,
                     "lastName": request.user.first_name,
                     "email": request.user.email,

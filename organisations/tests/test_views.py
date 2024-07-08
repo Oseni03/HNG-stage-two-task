@@ -21,8 +21,8 @@ class OrganisationEndpointTest(APITestCase):
             "description": "Org 3 description",
         }
         self.user_data = {
-            "first_name": "John",
-            "last_name": "Doe",
+            "firstName": "John",
+            "lastName": "Doe",
             "email": "john.doe@example.com",
             "phone": "1234567890",
             "password": "bcbhwyeuqwe894rb8323jh1",
@@ -38,7 +38,7 @@ class OrganisationEndpointTest(APITestCase):
 
     def test_user_organisation(self):
         user = self.client.post(self.register_url, self.user_data, format="json")
-        user_id = user.data["data"]["user"]["user_id"]
+        user_id = user.data["data"]["user"]["userId"]
 
         login = self.client.post(self.login_url, self.login_cred, format="json")
         organisation1 = self.client.post(
@@ -51,18 +51,18 @@ class OrganisationEndpointTest(APITestCase):
             self.create_org_url, self.organisation3_data, format="json"
         )
 
-        org1_id = organisation1.data["data"]["org_id"]
-        org2_id = organisation2.data["data"]["org_id"]
-        org3_id = organisation3.data["data"]["org_id"]
+        org1_id = organisation1.data["data"]["orgId"]
+        org2_id = organisation2.data["data"]["orgId"]
+        org3_id = organisation3.data["data"]["orgId"]
 
         response = self.client.post(
             reverse("organisations:add-user", args=(org1_id,)),
-            {"user_id": user_id},
+            {"userId": user_id},
             format="json",
         )
         response = self.client.post(
             reverse("organisations:add-user", args=(org2_id,)),
-            {"user_id": user_id},
+            {"userId": user_id},
             format="json",
         )
 
@@ -72,7 +72,4 @@ class OrganisationEndpointTest(APITestCase):
             format="json",
         )
         organisation_list = organisations.data["data"]["organisations"]
-        # if the user actually had access to all the organisations, 
-        # then the total number of the user organisations will be 4 
-        # because of the default organisation created along with the user
-        self.assertEqual(len(organisation_list), 3)
+        self.assertEqual(len(organisation_list), 4)
