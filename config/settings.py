@@ -23,7 +23,7 @@ SECRET_KEY = "django-insecure-_hvdb4xayyaix9%!+gt!irttfhowq192phirz$&o_8=e!%_gvq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", "localhost", ".now.sh"]
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", ".now.sh", "localhost"]
 
 
 # Application definition
@@ -124,6 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -168,9 +170,3 @@ SWAGGER_SETTINGS = {
 
 HASHID_FIELD_SALT = env("HASHID_FIELD_SALT", default="haaga82@#*?!")
 HASHID_FIELD_ENABLE_HASHID_OBJECT = False
-
-
-# STATIC FILES CONFIGURATIONS
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
