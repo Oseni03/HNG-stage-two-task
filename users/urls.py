@@ -17,5 +17,5 @@ users_urlpatterns = [
 
 urlpatterns = [
     path("auth/", include(auth_urlpatterns)),
-    path("api/users/", include(users_urlpatterns)),
+    path("users/", include(users_urlpatterns)),
 ]

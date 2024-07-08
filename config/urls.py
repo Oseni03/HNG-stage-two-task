@@ -27,8 +27,15 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("users.urls", namespace="users")),
-    path("api/organisations/", include("organisations.urls", namespace="organisations")),
+    path(
+         "api/",
+        include(
+            [
+                path("", include("users.urls", namespace="users")),
+                path("organisations/", include("organisations.urls", namespace="organisations")),
+            ]
+        ),
+    ),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r"^doc/", schema_view.with_ui("swagger")),
     re_path(r"^redoc/", schema_view.with_ui("redoc")),
