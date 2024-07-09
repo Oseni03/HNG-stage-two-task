@@ -38,7 +38,7 @@ class OrganisationEndpointTest(APITestCase):
 
     def test_user_organisation(self):
         user = self.client.post(self.register_url, self.user_data, format="json")
-        user_id = user.data["data"]["user"]["userId"]
+        user_id = int(user.data["data"]["user"]["userId"])
 
         login = self.client.post(self.login_url, self.login_cred, format="json")
         organisation1 = self.client.post(

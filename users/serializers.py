@@ -9,7 +9,7 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    userId = serializers.IntegerField(source="id", read_only=True)
+    userId = serializers.CharField(source="id", read_only=True)
     firstName = serializers.CharField(source="first_name")
     lastName = serializers.CharField(source="last_name")
     email = serializers.EmailField(

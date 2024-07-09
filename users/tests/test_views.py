@@ -35,7 +35,7 @@ class RegisterEndpointTest(APITestCase):
     def test_register_user_with_default_organisation(self):
         response = self.client.post(self.register_url, self.user_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        user_id = response.data["data"]["user"]["userId"]
+        user_id = int(response.data["data"]["user"]["userId"])
         organisation = Organisation.objects.filter(users__id=user_id).first()
         self.assertIsNotNone(organisation)
         self.assertEqual(

@@ -28,7 +28,7 @@ class CreateUserView(CreateAPIView):
             {
                 "accessToken": access_token,
                 "user": {
-                    "userId": user.id,
+                    "userId": str(user.id),
                     "firstName": user.first_name,
                     "lastName": user.first_name,
                     "email": user.email,
