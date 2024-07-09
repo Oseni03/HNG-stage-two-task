@@ -26,7 +26,7 @@ class CreateUserView(CreateAPIView):
         return utils.success_response(
             "Registration successful",
             {
-                "access_token": access_token,
+                "accessToken": access_token,
                 "user": {
                     "userId": user.id,
                     "firstName": user.first_name,
@@ -56,7 +56,7 @@ class CookieTokenObtainPairView(jwt_views.TokenObtainPairView):
             response = utils.success_response(
                 message="Login successful.",
                 data={
-                    "access_token": access_token,
+                    "accessToken": access_token,
                     "user": {
                         "userId": user.id,
                         "firstName": user.first_name,
