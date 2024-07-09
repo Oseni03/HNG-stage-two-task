@@ -21,10 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("userId", "firstName", "lastName", "email", "phone", "password")
 
-    def validate_password(self, password):
-        password_validation.validate_password(password)
-        return password
-
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         user.organisations.create(name=f"{user.first_name.strip()}'s Organisation")
